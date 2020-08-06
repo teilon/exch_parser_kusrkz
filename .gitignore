@@ -1,1 +1,4 @@
 **/.idea/
+**/*.txt
+!requirements.txt
+**/__pycache__/
