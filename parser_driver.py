@@ -1,11 +1,21 @@
 from selenium import webdriver
 from bs4 import BeautifulSoup
 
+
 def parse():
     target_url = 'https://kurs.kz/'
 
     html = get_target_html(target_url)
     get_data(html)
+
+
+def get_target_html(url, useragent=None, proxy=None):
+    driver = webdriver.Firefox()
+    driver.get(url)
+    html = driver.page_source
+    driver.close()
+    return html
+
 
 def get_data(html):
     # with open('tmp.txt', 'a') as f:
@@ -14,7 +24,7 @@ def get_data(html):
     soup = BeautifulSoup(html, 'lxml')
     target_trs = soup.find('div', id='table').find('tbody').find_all('tr', class_=["punkt-close", "punkt-open"])
 
-    n = 0;
+    n = 0
     for tr in target_trs:
         tds = tr.find_all('td')
         name = tds[0].find('a').text.strip()
@@ -46,12 +56,3 @@ def get_data(html):
             # f.write('{} [{}]\n'.format(name, address))
             f.write('{} [{}] USD {}:{} EUR {}:{} RUB {}:{} | {}\n'.
                     format(name, address, usd_buy, usd_sale, eur_buy, eur_sale, rub_buy, rub_sale, phones[-1]))
-
-
-
-def get_target_html(url, useragent=None, proxy=None):
-    driver = webdriver.Firefox()
-    driver.get(url)
-    html = driver.page_source
-    driver.close()
-    return html
