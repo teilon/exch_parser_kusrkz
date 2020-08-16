@@ -21,6 +21,7 @@ def get_data(html):
     soup = BeautifulSoup(html, 'lxml')
     target_trs = soup.find('div', id='table').find('tbody').find_all('tr', class_=["punkt-close", "punkt-open"])
 
+    data = []
     for tr in target_trs:
         tds = tr.find_all('td')
         name = tds[0].find('a').text.strip()
@@ -55,15 +56,22 @@ def get_data(html):
         #     'sale': sale,
         #     'creation_date': datetime.utcnow()
         # }
+        usd_data = make_data(name, address, phones[-1], 'USD', usd_buy, usd_sale)
+        eur_data = make_data(name, address, phones[-1], 'EUR', eur_buy, eur_sale)
+        rub_data = make_data(name, address, phones[-1], 'RUB', rub_buy, rub_sale)
 
-        with open('tmp.txt', 'a') as f:
-            f.write('{} [{}] USD {}:{} EUR {}:{} RUB {}:{} | {}\n'.
-                    format(name,
-                           address,
-                           usd_buy,
-                           usd_sale,
-                           eur_buy,
-                           eur_sale,
-                           rub_buy,
-                           rub_sale,
-                           phones[-1]))
+        data.extend([usd_data, eur_data, rub_data])
+
+    with open('tmp.txt', 'a') as f:
+        f.write('{}\n'.format(data))
+
+
+def make_data(entity_name, entity_address, entity_phone, currency_name, buy, sale):
+    return {
+            'entity_name': entity_name,
+            'entity_address': entity_address,
+            'entity_phone': entity_phone,
+            'currency_name': currency_name,
+            'buy': buy,
+            'sale': sale
+        }
