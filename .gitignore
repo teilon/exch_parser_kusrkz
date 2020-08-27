@@ -1,4 +1,5 @@
 **/.idea/
 **/*.txt
+!requirement*
 **/*.log
 **/__pycache__/
