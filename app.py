@@ -11,7 +11,7 @@ app = Flask(__name__)
 def start():
     data = parse()
 
-    url = 'http://78.155.206.12/items'
+    url = 'http://78.155.206.12:5080/items'
     headers = {'Content-type': 'application/json',
                'Accept': 'text/plain',
                'Content-Encoding': 'utf-8'}
