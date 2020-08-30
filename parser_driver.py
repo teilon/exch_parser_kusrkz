@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from bs4 import BeautifulSoup
 
 
@@ -10,7 +11,8 @@ def parse():
 
 
 def get_target_html(url, useragent=None, proxy=None):
-    driver = webdriver.Firefox()
+    driver = webdriver.Remote("http://browser:4444/wd/hub", DesiredCapabilities.FIREFOX)
+    # driver = webdriver.Firefox()
     driver.get(url)
     html = driver.page_source
     driver.close()
