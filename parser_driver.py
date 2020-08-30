@@ -15,7 +15,8 @@ def get_target_html(url, useragent=None, proxy=None):
     # driver = webdriver.Firefox()
     driver.get(url)
     html = driver.page_source
-    driver.close()
+    driver.quit()
+    # driver.close()
     return html
 
 
