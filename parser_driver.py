@@ -2,6 +2,8 @@ from selenium import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from bs4 import BeautifulSoup
 
+import logging
+
 
 def parse():
     target_url = 'https://kurs.kz/'
@@ -11,9 +13,14 @@ def parse():
 
 
 def get_target_html(url, useragent=None, proxy=None):
-    driver = webdriver.Remote("http://browser:4444/wd/hub", DesiredCapabilities.FIREFOX)
+    # driver = webdriver.Remote("http://browser:4444/wd/hub", DesiredCapabilities.FIREFOX)
+    logging.warning('\n-- web-driver turn on!')
+    driver = webdriver.Remote("http://78.155.206.12:4444/wd/hub", DesiredCapabilities.FIREFOX)
+    # driver = webdriver.Remote("http://78.155.206.12:4444", DesiredCapabilities.FIREFOX)
     # driver = webdriver.Firefox()
+    logging.warning('\n-- web-driver On!')
     driver.get(url)
+    logging.warning('\n-- html data success!')
     html = driver.page_source
     driver.quit()
     # driver.close()
