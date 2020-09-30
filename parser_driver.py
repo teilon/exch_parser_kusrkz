@@ -10,7 +10,9 @@ import logging
 def parse():
     target_url = 'https://kurs.kz/'
 
+    logging.warning('pre browser')
     html = get_target_html(target_url)
+    logging.warning('post browser')
     data = get_data(html)
     if DO_WRITE_TO_FILE:
         write_to_file(data)
@@ -18,8 +20,9 @@ def parse():
 
 
 def get_target_html(url, useragent=None, proxy=None):
-    driver = webdriver.Remote("http://{}/wd/hub".format(BROWSER_HOST), DesiredCapabilities.FIREFOX)
+    driver = webdriver.Remote(BROWSER_HOST, DesiredCapabilities.FIREFOX)
     # driver = webdriver.Firefox()
+    logging.warning('get url')
     driver.get(url)
     html = driver.page_source
     driver.quit()
